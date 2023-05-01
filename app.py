@@ -145,18 +145,19 @@ def main():
                 logging.info(
                     f"Error updating Spotify status or adding tracks/artists/songs/mood: {e}\n"
                 )
-
-            if not layout_recents or not layout_artists or not layout_songs:
-                try:
-                    sync_status(condi=False)
-                except Exception as e:
-                    logging.info(f"Error updating layout sync status: {e}\n")
-            else:
-                try:
-                    sync_status(condi=True)
-                except Exception as e:
-                    logging.info(f"Error updating layout sync status: {e}\n")
-
+            try:
+                if not layout_recents or not layout_artists or not layout_songs:
+                    try:
+                        sync_status(condi=False)
+                    except Exception as e:
+                        logging.info(f"Error updating layout sync status: {e}\n")
+                else:
+                    try:
+                        sync_status(condi=True)
+                    except Exception as e:
+                        logging.info(f"Error updating layout sync status: {e}\n")
+            except Exception as e:
+                logging.info(f"Error updating layout sync status: {e}\n")
             # update the README file
             try:
                 pushfile = read_write_file(file_path="files/README.md", mode="r")

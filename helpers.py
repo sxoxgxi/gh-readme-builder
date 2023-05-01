@@ -1,50 +1,8 @@
 import os
 import sys
-import spotipy
 import logging
-from spotipy.oauth2 import SpotifyOAuth
 
-from config import client_secret, client_id, redirect_uri
-
-# token = os.getenv('token')
-# CLIENT_ID = os.getenv('id')
-# CLIENT_SECRET = os.getenv('secret')
-
-scopes = [
-    "user-follow-read",
-    "ugc-image-upload",
-    "user-read-playback-state",
-    "user-modify-playback-state",
-    "user-read-currently-playing",
-    "user-read-private",
-    "user-read-email",
-    "user-follow-modify",
-    "user-follow-read",
-    "user-library-modify",
-    "user-library-read",
-    "streaming",
-    "app-remote-control",
-    "user-read-playback-position",
-    "user-top-read",
-    "user-read-recently-played",
-    "playlist-modify-private",
-    "playlist-read-collaborative",
-    "playlist-read-private",
-    "playlist-modify-public",
-]
-sp = spotipy.Spotify(
-    auth_manager=SpotifyOAuth(
-        client_id=client_id,
-        client_secret=client_secret,
-        redirect_uri=redirect_uri,
-        scope=scopes,
-    )
-)
-public_sp = spotipy.Spotify()
-
-
-def profile() -> dict:
-    return sp.current_user()
+from auth import sp
 
 
 def recently_played(limit: int) -> dict:
@@ -97,13 +55,19 @@ def check_avatar_exists(repo, github_reponame):
 
 
 def has_readme(data: str) -> bool:
-    if os.path.exists("files/README.md"):
-        if os.stat("files/README.md").st_size > 0:
+    folder_path = "files"
+    if not os.path.exists(folder_path):
+        os.mkdir(folder_path)
+        logging.info(f"{folder_path} folder was not present, so it was created.\n")
+
+    readme_path = os.path.join(folder_path, "README.md")
+    if os.path.exists(readme_path):
+        if os.stat(readme_path).st_size > 0:
             return True
         logging.info("README.md file is empty. Please fill it with the template.\n")
         sys.exit(1)
     else:
-        with open("files/README.md", "w", encoding="utf-8") as f:
+        with open(readme_path, "w", encoding="utf-8") as f:
             f.write(data)
         logging.info("README.md was successfully created and written.\n")
         return True
