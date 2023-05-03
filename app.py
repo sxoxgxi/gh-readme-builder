@@ -10,13 +10,14 @@ from logging.handlers import RotatingFileHandler
 from helpers import read_write_file, has_readme, check_avatar_exists
 from config import github_reponame, github_token, discord_url, website
 from constructor import (
-    get_user_status,
-    add_recently_played,
-    add_top_artists,
-    add_top_songs,
     update_mood,
     sync_status,
+    update_quote,
+    add_top_songs,
     prepare_layout,
+    add_top_artists,
+    get_user_status,
+    add_recently_played,
 )
 
 
@@ -24,6 +25,7 @@ g = Github(github_token)
 
 user = g.get_user()
 avatar_url = user.avatar_url
+name = user.login
 
 handler = RotatingFileHandler("app.log", maxBytes=1024 * 1024, backupCount=1)
 handler.setLevel(logging.INFO)
@@ -107,9 +109,17 @@ def prepare_files():
 
 
 def main():
-    prepare_files()
-    prepare_avatar(avatar_url=avatar_url, save_path="files/avatar.png")
-    prepare_layout(website=website, discord_url=discord_url, avatar_url="avatar.png")
+    try:
+        prepare_files()
+        prepare_avatar(avatar_url=avatar_url, save_path="files/avatar.png")
+        prepare_layout(
+            website=website, discord_url=discord_url, avatar_url="avatar.png"
+        )
+        update_quote()
+        logging.info("Files initialized successfully\n")
+    except Exception as e:
+        logging.info(f"Could not initialize the file: {e}\n")
+
     try:
         while True:
             now = datetime.datetime.now()

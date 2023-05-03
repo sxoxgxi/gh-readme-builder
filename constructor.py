@@ -1,16 +1,18 @@
 import logging
+import requests
 import pandas as pd
 
 from config import username, user_url, limit
 from helpers import (
     playing,
-    recently_played,
-    top_artists,
+    linkify,
     top_songs,
+    top_artists,
     double_hyphen,
-    classify_music_tastes,
     get_music_mood,
     read_write_file,
+    recently_played,
+    classify_music_tastes,
 )
 
 
@@ -279,6 +281,28 @@ def prepare_layout(website: str, discord_url: str, avatar_url: str) -> None:
         readme[:startblock] + content + readme[endblock + len("</p socials>") :]
     )
     read_write_file(file_path="files/README.md", mode="w", data=newcontent)
+
+
+def update_quote():
+    try:
+        url = "https://zenquotes.io/api/quotes"
+        response = requests.get(url)
+        data = response.json()
+        quote = data[0]["q"]
+        author = data[0]["a"]
+    except (requests.exceptions.RequestException, ValueError, KeyError) as e:
+        quote = "Error while fetching quote."
+        author = f"{e}"
+
+    content = read_write_file(file_path="files/README.md", mode="r")
+    startblock = content.index("<h4 align='center'>")
+    endblock = content.index("</a>.</h4>")
+    new_content = f"<h4 align='center'>{quote} - <a href='{linkify(author)}' target='_blank'>{author}</a>.</h4>"
+
+    new_content = (
+        content[:startblock] + new_content + content[endblock + len("</a>.</h4>") :]
+    )
+    read_write_file("files/README.md", "w", data=new_content)
 
 
 if __name__ == "__main__":

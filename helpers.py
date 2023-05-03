@@ -45,6 +45,10 @@ def read_write_file(file_path: str, mode: str, data=None) -> str | None:
         raise ValueError('Mode must be either "r" or "w".')
 
 
+def linkify(query: str) -> str:
+    return f"https://duckduckgo.com/?q={query.replace(' ', '+')}"
+
+
 def check_avatar_exists(repo, github_reponame):
     contents = repo.get_contents("")
     for content in contents:
