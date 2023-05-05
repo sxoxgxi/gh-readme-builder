@@ -1,0 +1,5 @@
+requests==2.27.1
+spotipy==2.20.0
+PyGithub==1.55
+Pillow==9.1.1
+pandas==1.4.3
