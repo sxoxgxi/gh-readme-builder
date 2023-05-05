@@ -6,7 +6,7 @@ This is a Python script that allows you to automatically update your Github prof
 To use this program, you'll need to follow a few steps:
 
 * Clone this repository to your local machine.
-* Install the required dependencies by running `'pip install -r requirements.txt in your terminal'`.
+* Install the required dependencies by running `'pip install -r requirements.txt'` in your terminal.
 * Create a Spotify Developer account and create a new app. You'll need to set the redirect URI to `http://localhost:8080` | `http://localhost:5000` or `any`.
 * Make sure that the redirect uri in config file is same as the spotify app redirect uri.
 * Get your github token from `https://github.com/settings/tokens`.
