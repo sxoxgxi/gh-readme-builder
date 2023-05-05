@@ -62,7 +62,7 @@ def update_readme_file(content: str) -> None:
         if gitcontent.decoded_content.decode("utf-8") != content:
             repo.update_file(
                 gitcontent.path,
-                message="Spotify stats Updated.",
+                message="`Update:` Spotify stats.",
                 content=content,
                 sha=gitcontent.sha,
                 branch="main",
@@ -70,7 +70,6 @@ def update_readme_file(content: str) -> None:
             logging.info("Successfully updated the README.md file with changes.\n")
         else:
             logging.info("No changes were made to README.md. Reloading.\n")
-        upload_image()
     except Exception as e:
         logging.info(f"Failed to update the README.md: {e}\n")
 
@@ -83,7 +82,7 @@ def upload_image():
                 content = file.read()
             repo.create_file(
                 path="avatar.png",
-                message="Add avatar",
+                message="`Add:` avatar.",
                 content=content,
                 branch="main",
             )
@@ -108,15 +107,18 @@ def prepare_files():
         return
 
 
+def _initialize_page():
+    prepare_files()
+    prepare_avatar(avatar_url=avatar_url, save_path="files/avatar.png")
+    prepare_layout(website=website, discord_url=discord_url, avatar_url="avatar.png")
+    upload_image()
+    update_quote()
+    logging.info("Files initialized successfully\n")
+
+
 def main():
     try:
-        prepare_files()
-        prepare_avatar(avatar_url=avatar_url, save_path="files/avatar.png")
-        prepare_layout(
-            website=website, discord_url=discord_url, avatar_url="avatar.png"
-        )
-        update_quote()
-        logging.info("Files initialized successfully\n")
+        _initialize_page()
     except Exception as e:
         logging.info(f"Could not initialize the file: {e}\n")
 
