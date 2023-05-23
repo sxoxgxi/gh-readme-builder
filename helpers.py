@@ -3,6 +3,7 @@ import sys
 import logging
 
 from auth import sp
+from config import time_range
 
 
 def recently_played(limit: int) -> dict:
@@ -10,11 +11,11 @@ def recently_played(limit: int) -> dict:
 
 
 def top_artists(limit: int) -> dict:
-    return sp.current_user_top_artists(limit=limit, time_range="short_term")
+    return sp.current_user_top_artists(limit=limit, time_range=time_range)
 
 
 def top_songs(limit: int) -> dict:
-    return sp.current_user_top_tracks(limit=limit, time_range="short_term")
+    return sp.current_user_top_tracks(limit=limit, time_range=time_range)
 
 
 def playing() -> dict:

@@ -2,7 +2,7 @@ import logging
 import requests
 import pandas as pd
 
-from config import username, user_url, limit
+from config import username, user_url, limit, time_range
 from helpers import (
     playing,
     linkify,
@@ -14,6 +14,12 @@ from helpers import (
     recently_played,
     classify_music_tastes,
 )
+
+time_frame = {
+    "long_term": "several years",
+    "medium_term": "last 6 months",
+    "short_term": "this month",
+}.get(time_range)
 
 
 def get_user_status() -> bool:
@@ -134,7 +140,7 @@ def add_top_artists() -> bool:
     endblock = readme.index("</p topartists>")
     new_content = f"""<p topartists, float='left'>
   <br>
-  <h1>Top artists this month</h1>
+  <h1>Top artists [{time_frame}]</h1>
   <p></p>
   {table_html}
 </p topartists>"""
@@ -174,9 +180,9 @@ def add_top_songs() -> bool:
             )
         )
 
-    content = """<p topsongs, float='left' >
+    content = f"""<p topsongs, float='left' >
   <br>
-  <h1>Top tracks this month</h1>
+  <h1>Top tracks [{time_frame}]</h1>
   <p></p>
   <table style='width:100%'>
     <tr align='center'>

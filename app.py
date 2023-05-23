@@ -97,7 +97,11 @@ def prepare_files():
     try:
         repo = g.get_repo("sxoxgxi/sxoxgxi")
         data = repo.get_contents("README.md", ref="main")
-        if has_readme(data=data.decoded_content.decode("utf-8")):
+        updated_data = data.decoded_content.decode("utf-8").replace(
+            "<img src='https://profile-counter.glitch.me/sxoxgxi/count.svg'>",
+            f"<img src='https://profile-counter.glitch.me/{name}/count.svg'>",
+        )
+        if has_readme(data=updated_data):
             pass
     except UnicodeEncodeError as e:
         logging.info(f"Error encoding README.md content: {e}\n")

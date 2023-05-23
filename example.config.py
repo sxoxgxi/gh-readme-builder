@@ -10,3 +10,4 @@ github_reponame = (
 )
 discord_url = "your-discord-server-url"
 website = "your-website"
+time_range = "short_term"  # Options: long_term (several years), medium_term (last 6 months), short_term (last 4 weeks)
