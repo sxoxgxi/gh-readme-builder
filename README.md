@@ -18,7 +18,11 @@ That's it! Your Github profile will now display your latest musical interests.
 ## Todo
 
 - [ ] Implement caching to avoid making unnecessary requests to the Spotify API.
+<<<<<<< HEAD
 - [x] ~Allow users to choose the time range (e.g. last week, last month) for their top tracks and artists.~
+=======
+- [ ] Allow users to choose the time range (e.g. last week, last month) for their top tracks and artists.
+>>>>>>> e0ef126944cd46c660140590ee0d6d5c6acd974a
 - [ ] Add support for generating a "recommended tracks" section based on the user's top tracks or currently playing song.
 - [ ] Add a feature to display the popularity score of the currently playing song.
 
