@@ -4,3 +4,4 @@ config.py
 .cache
 files/
 tests.py
+.venv
