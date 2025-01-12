@@ -1,6 +1,6 @@
+import logging
 import os
 import sys
-import logging
 
 from auth import sp
 from config import time_range
@@ -78,6 +78,7 @@ def has_readme(data: str) -> bool:
         return True
 
 
+# the following endpoint has been deprecated by the spotify api
 def get_audio_features(track_ids: list) -> list:
     audio_features = sp.audio_features(track_ids)
     return audio_features
