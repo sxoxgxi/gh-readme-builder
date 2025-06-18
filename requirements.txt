@@ -1,5 +1,5 @@
 requests==2.31.0
 spotipy==2.25.1
 PyGithub==1.55
-Pillow==10.0.1
+Pillow==10.3.0
 pandas==1.4.3
